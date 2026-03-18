@@ -1,16 +1,54 @@
-# React + Vite
+# 💰 Money Tracker - Student Daily Logger
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fast, simple, and digital expense notebook for students to track their daily spending in under 10 seconds.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
+- **10-Second Logging**: Add expenses quickly with a custom numeric keypad.
+- **Monthly Budgeting**: Set and track your monthly spending limit.
+- **Category Analytics**: Beautifully visualized insights by category.
+- **Real-time Sync**: Powered by Supabase for instantaneous data updates across devices.
+- **Glassmorphic UI**: Premium, modern design with smooth animations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🛠️ Tech Stack
+- **Frontend**: React (Vite) + Tailwind CSS
+- **Animations**: Framer Motion
+- **Database/Auth**: Supabase
+- **Icons**: Lucide React
+- **Dates**: Day.js
 
-## React Compiler
+## 💻 Local Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/shivateja-915/moneytracker-.git
+    cd moneytracker-
+    ```
 
-## Expanding the ESLint configuration
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3.  **Configure Environment Variables**:
+    Create a `.env.local` file in the root and add:
+    ```env
+    VITE_SUPABASE_URL=your_supabase_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
+
+4.  **Run Development Server**:
+    ```bash
+    npm run dev
+    ```
+
+## 🌍 Vercel Deployment
+
+This project is pre-configured for Vercel deployment.
+
+1.  Connect your GitHub repository to Vercel.
+2.  **Add Environment Variables**: In the Vercel project settings, add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+3.  **Routing**: The `vercel.json` file handles all client-side routing redirects.
+4.  **Supabase Configuration**: Add your production Vercel URL to the Supabase Authentication > URL Configuration settings.
+
+---
+Built with ❤️ by AI Assistant for @shivateja-915.
