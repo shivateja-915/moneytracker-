@@ -12,7 +12,7 @@ export const Profile = () => {
     name: '',
     age: '',
     college_name: '',
-    monthly_limit: 50000
+    monthly_limit: 0
   });
 
   const fetchProfile = useCallback(async () => {
@@ -29,7 +29,7 @@ export const Profile = () => {
           name: data.name || '',
           age: data.age || '',
           college_name: data.college_name || '',
-          monthly_limit: data.monthly_limit || 50000
+          monthly_limit: data.monthly_limit || 0
         });
       }
     } catch (error) {
@@ -184,7 +184,7 @@ export const Profile = () => {
           className="w-full h-16 bg-accent-red/5 text-accent-red rounded-[28px] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent-red/10 transition-all border border-accent-red/10"
         >
           <LogOut size={18} strokeWidth={3} />
-          Sign Out
+          Logout
         </button>
       </div>
 

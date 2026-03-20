@@ -366,7 +366,7 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [totalToday, setTotalToday] = useState(0);
   const [totalMonth, setTotalMonth] = useState(0);
-  const [monthlyLimit, setMonthlyLimit] = useState(50000);
+  const [monthlyLimit, setMonthlyLimit] = useState(0);
   const [userName, setUserName] = useState('');
   const [isAuthSheetOpen, setIsAuthSheetOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -409,8 +409,8 @@ export const Dashboard = () => {
       setTotalToday(todayExps.reduce((sum, exp) => sum + Number(exp.amount), 0));
       setTotalMonth(data.reduce((sum, exp) => sum + Number(exp.amount), 0));
 
-      if (profileRes.data?.monthly_limit) {
-        setMonthlyLimit(profileRes.data.monthly_limit);
+      if (profileRes.data?.monthly_limit !== undefined) {
+        setMonthlyLimit(profileRes.data.monthly_limit || 0);
       }
       // Set name even if empty string so we always have the latest value
       setUserName(profileRes.data?.name || '');
@@ -566,7 +566,7 @@ export const Dashboard = () => {
           {/* Monthly Limit Row */}
           <div className="flex justify-between items-center bg-white/5 p-4 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer" onClick={() => setIsEditLimitOpen(true)}>
             <div className="flex flex-col">
-              <span className="text-white/40 text-[10px] font-black uppercase tracking-widest leading-none mb-1">Monthly Limit</span>
+              <span className="text-white/40 text-[10px] font-black uppercase tracking-widest leading-none mb-1">Add your monthly limit</span>
               <div className="flex items-baseline gap-1">
                 <span className="text-white/60 text-sm font-bold">₹</span>
                 <span className="text-xl font-black">{monthlyLimit.toLocaleString()}</span>
@@ -611,39 +611,49 @@ export const Dashboard = () => {
         </div>
       </motion.div>
 
-      {/* Today's Summary Card */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-white rounded-[40px] p-8 shadow-medium flex items-center justify-between border border-gray-50"
-      >
-        <div className="space-y-1">
-          <span className="text-secondary/40 text-xs font-bold uppercase tracking-widest">Today</span>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-secondary/40 text-lg font-bold">₹</span>
-            <h3 className="text-4xl font-black text-secondary tracking-tighter">
+      <div className="grid grid-cols-2 gap-4">
+        {/* Today's Transactions Button */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white rounded-[32px] p-6 shadow-medium flex flex-col items-center justify-center border border-gray-50 active:scale-95 transition-all text-center cursor-default"
+        >
+          <span className="text-secondary/40 text-[10px] font-black uppercase tracking-widest mb-1">Today</span>
+          <div className="flex items-baseline gap-1">
+            <span className="text-secondary/40 text-xs font-bold">₹</span>
+            <h3 className="text-3xl font-black text-secondary tracking-tighter">
               {totalToday.toLocaleString()}
             </h3>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Add Transaction Button */}
         {isLimitReached ? (
-          <button
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
             onClick={() => setIsLimitNoticeOpen(true)}
-            className="flex flex-col items-center justify-center w-20 h-16 bg-red-50 rounded-[24px] border-2 border-red-200 px-2 active:scale-95 transition-transform"
+            className="flex flex-col items-center justify-center bg-red-50 rounded-[32px] border-2 border-red-100 p-6 active:scale-95 transition-all group"
           >
-            <AlertTriangle size={16} className="text-red-500 mb-0.5" />
-            <span className="text-red-500 text-[9px] font-black uppercase tracking-widest leading-tight text-center">Limit{"\n"}Reached</span>
-          </button>
+            <AlertTriangle size={24} className="text-red-500 mb-1 group-hover:scale-110 transition-transform" />
+            <span className="text-red-500 text-[9px] font-black uppercase tracking-widest leading-tight text-center">Limit Reached</span>
+          </motion.button>
         ) : (
-          <button 
+          <motion.button 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
             onClick={() => setIsAddModalOpen(true)}
-            className="w-16 h-16 bg-primary rounded-[24px] flex items-center justify-center text-white shadow-lg shadow-primary/30 active:scale-90 transition-transform group"
+            className="bg-primary rounded-[32px] p-6 flex flex-col items-center justify-center text-white shadow-xl shadow-primary/30 active:scale-95 transition-all group overflow-hidden relative"
           >
-            <Plus size={32} strokeWidth={3} className="group-hover:rotate-90 transition-transform duration-300" />
-          </button>
+            <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Plus size={28} strokeWidth={3} className="mb-1 group-hover:rotate-90 transition-transform duration-300" />
+            <span className="text-[9px] font-black uppercase tracking-widest leading-tight">Add Transaction</span>
+          </motion.button>
         )}
-      </motion.div>
+      </div>
 
       {/* Monthly Category Breakdown */}
       {monthlyExpenses.length > 0 && (() => {
